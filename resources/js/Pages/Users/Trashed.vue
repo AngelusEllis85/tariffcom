@@ -12,6 +12,7 @@
                 <div>
                     Deleted At: {{ new Date(user.deleted_at).toLocaleDateString() }}
                 </div>
+                <button @click="restoreUser(user.id)" class="bg-blue-500 px-4 py-2 text-white rounded">Restore</button>
                 <hr class="mt-4">
             </div>
         </div>
@@ -22,11 +23,25 @@
 </template>
 
 <script>
+import { Inertia } from '@inertiajs/inertia';
+import axios from 'axios';
+
 export default {
-    props: ['trashedUsers']
+    props: ['trashedUsers'],
+    methods: {
+        restoreUser(id) {
+            axios.post(`/users/restore/${id}`)
+                .then(() => {
+                    Inertia.visit(`/users/${id}`);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+    }
 }
 </script>
 
+
 <style>
-/* Add your styles here */
 </style>

@@ -103,8 +103,21 @@ class UserController extends Controller
     }
 
     public function trashed()
-{
-    $trashedUsers = User::onlyTrashed()->get();
-    return Inertia::render('Users/Trashed', ['trashedUsers' => $trashedUsers]);
-}
+    {
+        $trashedUsers = User::onlyTrashed()->get();
+        return Inertia::render('Users/Trashed', ['trashedUsers' => $trashedUsers]);
+    }
+
+    public function restore(string $id)
+    {
+        $user = User::onlyTrashed()->find($id);
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        $user->restore();
+
+        return response()->json(['message' => 'User restored successfully']);
+    }                               
 }
