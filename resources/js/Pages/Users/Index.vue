@@ -14,7 +14,7 @@
             <td class="py-2">{{ user.firstname }} {{ user.lastname }}</td>
             <td class="py-2">{{ user.email }}</td>
             <td class="py-2">
-              <router-link :to="`/users/${user.id}`" class="text-blue-500 hover:underline">View</router-link>
+                <inertia-link :href="route('users.show', user.id)" class="text-indigo-600 hover:text-indigo-900">View</inertia-link>
             </td>
           </tr>
         </tbody>
@@ -23,7 +23,12 @@
   </template>
   
   <script>
+    import { InertiaLink } from '@inertiajs/inertia-vue3';
+
   export default {
+    components: {
+        InertiaLink,
+    },
     props: ['users'],
   }
   </script>
