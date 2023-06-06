@@ -101,4 +101,10 @@ class UserController extends Controller
 
         return response()->json(['message' => 'User deleted successfully']);
     }
+
+    public function trashed()
+{
+    $trashedUsers = User::onlyTrashed()->get();
+    return Inertia::render('Users/Trashed', ['trashedUsers' => $trashedUsers]);
+}
 }
