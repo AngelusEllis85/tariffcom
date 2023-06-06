@@ -63,7 +63,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        return Inertia::render('Users/Edit', ['user' => $user]);
     }
 
     /**
@@ -71,7 +72,23 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::find($id);
+        $validatedData = $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'password' => ['required', Password::defaults()],
+        ]);
+
+        // Update the user with the validated data
+        $user->update([
+            'firstname' => $validatedData['firstname'],
+            'lastname' => $validatedData['lastname'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+        ]);
+
+        return redirect()->route('users.show', $user);
     }
 
     /**

@@ -15,11 +15,18 @@
                 <span class="ml-2">{{ user.email }}</span>
             </div>
         </div>
+        <div class="mt-4">
+            <inertia-link :href="`/users/${user.id}/edit`" class="px-4 py-2 rounded bg-blue-500 text-white">Edit User</inertia-link>
+        </div>
     </div>
 </template>
 
 <script>
+import { InertiaLink } from '@inertiajs/inertia-vue3';
 export default {
+    components: {
+        InertiaLink,
+    },
     props: ['user'],
 }
 </script>
