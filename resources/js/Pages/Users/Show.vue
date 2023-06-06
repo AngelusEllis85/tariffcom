@@ -17,17 +17,33 @@
         </div>
         <div class="mt-4">
             <inertia-link :href="`/users/${user.id}/edit`" class="px-4 py-2 rounded bg-blue-500 text-white">Edit User</inertia-link>
+            <button @click="deleteUser" class="px-4 py-2 ml-2 rounded bg-red-500 text-white">Delete User</button>
+
         </div>
     </div>
 </template>
 
 <script>
 import { InertiaLink } from '@inertiajs/inertia-vue3';
+import axios from 'axios'
 export default {
     components: {
         InertiaLink,
     },
     props: ['user'],
+    methods: {
+        deleteUser() {
+            if(confirm('Are you sure you want to delete this user?')) {
+                axios.delete(`/users/${this.user.id}`)
+                .then(() => {
+                    this.$inertia.visit('/users');
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            }
+        }
+    }
 }
 </script>
 
