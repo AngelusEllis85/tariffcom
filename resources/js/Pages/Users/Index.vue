@@ -11,12 +11,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
           <tr>
             <th class="py-2">Name</th>
             <th class="py-2">Email</th>
-            <th class="py-2">Actions</th>
+            <th class="py-2"></th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="user in users" :key="user.id">
-            <td class="py-2">{{ user.firstname }} {{ user.lastname }}</td>
+            <td class="py-2">{{ user.prefixname }} {{ user.firstname }} {{ user.middlename }} {{ user.lastname }} {{ user.suffixname }}</td>
             <td class="py-2">{{ user.email }}</td>
             <td class="py-2">
                 <inertia-link :href="route('users.show', user.id)" class="text-indigo-600 hover:text-indigo-900">View</inertia-link>

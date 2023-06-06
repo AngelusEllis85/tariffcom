@@ -7,12 +7,24 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
         <h1 class="text-2xl font-bold mb-4 text-gray-800">User Details</h1>
         <div class="border-t-2 border-gray-200">
             <div class="mt-4 text-gray-700">
+                <strong class="font-semibold">Prefix:</strong> 
+                <span class="ml-2">{{ user.prefixname }}</span>
+            </div>
+            <div class="mt-2 text-gray-700">
                 <strong class="font-semibold">First Name:</strong> 
                 <span class="ml-2">{{ user.firstname }}</span>
             </div>
             <div class="mt-2 text-gray-700">
                 <strong class="font-semibold">Last Name:</strong> 
                 <span class="ml-2">{{ user.lastname }}</span>
+            </div>
+            <div class="mt-2 text-gray-700">
+                <strong class="font-semibold">Middle Name:</strong> 
+                <span class="ml-2">{{ user.middlename }}</span>
+            </div>
+            <div class="mt-2 text-gray-700">
+                <strong class="font-semibold">Suffix:</strong> 
+                <span class="ml-2">{{ user.suffixname }}</span>
             </div>
             <div class="mt-2 text-gray-700">
                 <strong class="font-semibold">Email:</strong> 

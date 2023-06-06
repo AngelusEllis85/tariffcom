@@ -8,7 +8,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
         <div v-if="trashedUsers.length > 0">
             <div v-for="user in trashedUsers" :key="user.id">
                 <div>
-                    <strong>{{ user.firstname }} {{ user.lastname }}</strong>
+                    <strong>{{ user.prefixname }} {{ user.firstname }} {{ user.middlename }} {{ user.lastname }} {{ user.suffixname }}</strong>
                 </div>
                 <div>
                     <small>{{ user.email }}</small>

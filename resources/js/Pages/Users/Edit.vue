@@ -7,12 +7,24 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
       <h1 class="text-2xl font-bold mb-4">Edit User</h1>
       <form @submit.prevent="updateUser" class="max-w-md mx-auto">
         <div class="mb-4">
+          <label for="prefixname" class="block font-bold mb-2">Prefix (Mr, Mrs, Ms):</label>
+          <input type="text" id="prefixname" v-model="user.prefixname" class="border border-gray-300 p-2 w-full">
+        </div>
+        <div class="mb-4">
           <label for="firstname" class="block font-bold mb-2">First Name:</label>
           <input type="text" id="firstname" v-model="user.firstname" class="border border-gray-300 p-2 w-full" required>
         </div>
         <div class="mb-4">
+          <label for="middlename" class="block font-bold mb-2">Middle Name:</label>
+          <input type="text" id="middlename" v-model="user.middlename" class="border border-gray-300 p-2 w-full">
+        </div>
+        <div class="mb-4">
           <label for="lastname" class="block font-bold mb-2">Last Name:</label>
           <input type="text" id="lastname" v-model="user.lastname" class="border border-gray-300 p-2 w-full" required>
+        </div>
+        <div class="mb-4">
+          <label for="suffixname" class="block font-bold mb-2">Suffix (OBE, Bsc, MA etc.):</label>
+          <input type="text" id="suffixname" v-model="user.suffixname" class="border border-gray-300 p-2 w-full" >
         </div>
         <div class="mb-4">
           <label for="email" class="block font-bold mb-2">Email:</label>

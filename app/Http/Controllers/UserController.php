@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 
 class UserController extends Controller
@@ -35,18 +36,35 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'prefixname' => ['nullable', Rule::in(['Mr', 'Mrs', 'Ms'])],
             'firstname' => 'required',
+            'middlename' => 'nullable',
             'lastname' => 'required',
+            'suffixname' => 'nullable',
             'email' => 'required|email|unique:users',
             'password' => ['required', Password::defaults()],
         ]);
-    
-        $user = User::create([
+
+        $userData = [
             'firstname' => $validatedData['firstname'],
             'lastname' => $validatedData['lastname'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']), 
-        ]);
+        ];
+        
+        if (isset($validatedData['middlename'])) {
+            $userData['middlename'] = $validatedData['middlename'];
+        }
+        
+        if (isset($validatedData['prefixname'])) {
+            $userData['prefixname'] = $validatedData['prefixname'];
+        }
+        
+        if (isset($validatedData['suffixname'])) {
+            $userData['suffixname'] = $validatedData['suffixname'];
+        }
+        
+        $user = User::create($userData);
     
         return response()->json(['user' => $user]);
     }
@@ -76,19 +94,35 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $validatedData = $request->validate([
+            'prefixname' => ['nullable', Rule::in(['Mr', 'Mrs', 'Ms'])],
             'firstname' => 'required',
+            'middlename' => 'nullable',
             'lastname' => 'required',
+            'suffixname' => 'nullable',
             'email' => 'required|email|unique:users,email,'.$user->id,
             'password' => ['required', Password::defaults()],
         ]);
 
-        // Update the user with the validated data
-        $user->update([
+        $userData = [
             'firstname' => $validatedData['firstname'],
             'lastname' => $validatedData['lastname'],
             'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
-        ]);
+            'password' => Hash::make($validatedData['password']), 
+        ];
+        
+        if (isset($validatedData['middlename'])) {
+            $userData['middlename'] = $validatedData['middlename'];
+        }
+        
+        if (isset($validatedData['prefixname'])) {
+            $userData['prefixname'] = $validatedData['prefixname'];
+        }
+        
+        if (isset($validatedData['suffixname'])) {
+            $userData['suffixname'] = $validatedData['suffixname'];
+        }
+        
+        $user->update($userData);
 
         return redirect()->route('users.show', $user);
     }
