@@ -1,4 +1,8 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+</script>
 <template>
+    <AuthenticatedLayout>
     <div class="container mx-auto">
       <h1 class="text-2xl font-bold mb-4">Create New User</h1>
       <form @submit.prevent="submitForm" class="max-w-md mx-auto">
@@ -26,6 +30,7 @@
       </div>
       </form>
     </div>
+    </AuthenticatedLayout>
   </template>
   
   <style>
@@ -89,6 +94,7 @@
           });
       },
     },
+
   };
   </script>
   

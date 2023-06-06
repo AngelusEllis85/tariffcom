@@ -1,5 +1,10 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+</script>
+
 <template>
-    <div>
+    <AuthenticatedLayout>
+    <div class="container mx-auto">
       <h1 class="text-2xl font-bold mb-4">All Users</h1>
       <table class="w-full">
         <thead>
@@ -20,11 +25,11 @@
         </tbody>
       </table>
     </div>
+    </AuthenticatedLayout>
   </template>
   
   <script>
     import { InertiaLink } from '@inertiajs/inertia-vue3';
-
   export default {
     components: {
         InertiaLink,

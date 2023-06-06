@@ -7,6 +7,8 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
+
 
 class UserController extends Controller
 {
@@ -46,7 +48,7 @@ class UserController extends Controller
             'password' => Hash::make($validatedData['password']), 
         ]);
     
-        return response()->json(['message' => 'User created successfully', 'user' => $user]);
+        return response()->json(['user' => $user]);
     }
 
     /**
@@ -99,7 +101,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return response()->json(['message' => 'User deleted successfully']);
+        return response()->json();
     }
 
     public function trashed()
@@ -115,9 +117,14 @@ class UserController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-
         $user->restore();
-
-        return response()->json(['message' => 'User restored successfully']);
-    }                               
+        return response()->json();
+    }        
+    
+    public function forceDelete(string $id)
+    {                           
+        $user = User::onlyTrashed()->find($id);
+        $user->forceDelete();
+        return response()->json();
+    }                                           
 }

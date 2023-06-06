@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth', 'verified']], function() {
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
-
+    Route::delete('/users/force-delete/{id}', [UserController::class, 'forceDelete'])->name('users.forceDelete');
 });
 
 require __DIR__.'/auth.php';
