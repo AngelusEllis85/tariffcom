@@ -53,13 +53,16 @@ export default {
     },
     props: ['user'],
     methods: {
+        //deleteUser route
         deleteUser() {
             if(confirm('Are you sure you want to delete this user?')) {
                 axios.delete(`/users/${this.user.id}`)
                 .then(() => {
+                    //redirects to the users index page on success
                     this.$inertia.visit('/users');
                 })
                 .catch(error => {
+                    //logs the error
                     console.error(error);
                 });
             }

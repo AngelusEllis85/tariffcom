@@ -42,6 +42,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
         <button type="submit" class="bg-blue-500  px-4 py-2 rounded">Create User</button>
       </div>
       <div v-if="errorMessage" class="text-red-500">
+        <!-- displays an error message if theres an issue when creating the user -->
       {{ errorMessage }}
     </div>
     </form>
@@ -101,13 +102,16 @@ data() {
   };
 },
 methods: {
+  // handles the photo upload
   handlePhotoUpload() {
         const file = this.$refs.photoInput.files[0];
         this.form.photo = file;
     },
+  // submits the form
   submitForm() {
+    // creates a new FormData object
       let formData = new FormData();
-
+    // appends the form data to the formData object
       formData.append('prefixname', this.form.prefixname);
       formData.append('firstname', this.form.firstname);
       formData.append('middlename', this.form.middlename);
@@ -118,7 +122,7 @@ methods: {
       if (this.form.photo) {
           formData.append('photo', this.form.photo);
       }
-
+      // posts the formData object to the /users route
       axios.post('/users', formData, {
           headers: {
               'Content-Type': 'multipart/form-data'
@@ -128,6 +132,7 @@ methods: {
           const userId = response.data.user.id;
           this.$inertia.visit(`/users/${userId}`);
       }).catch(error => {
+        //failure
           this.errorMessage = error.response.data.message || 'An error occurred';
       });
   },

@@ -12,6 +12,7 @@ class UserSavedListener implements ShouldQueue
 
     public function handle(UserSaved $event)
     {
+        // Get the user from the event
         $user = $event->user;
         // Calculate the user's full name
         $fullName = $user->firstname;
@@ -34,7 +35,7 @@ class UserSavedListener implements ShouldQueue
             $gender = 'Female';
         }
         
-        // Update or create the details in the details table
+        // Create an array of details to update or create
         $details = [
             ['key' => 'Full name', 'type' => 'bio', 'value' => $fullName],
             ['key' => 'Middle Initial', 'type' => 'bio', 'value' => $middleInitial],
@@ -42,6 +43,7 @@ class UserSavedListener implements ShouldQueue
             ['key' => 'Gender', 'type' => 'bio', 'value' => $gender],
         ];
         
+        // Update or create the details in the details table
         foreach ($details as $detail) {
             $user->details()->updateOrCreate(['key' => $detail['key'], 'type' => $detail['type']], $detail);
         }

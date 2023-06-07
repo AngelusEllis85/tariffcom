@@ -15,6 +15,7 @@ class User extends Authenticatable
 
     public function details()
     {
+        // return $this->hasMany(Detail::class, 'user_id', 'id');
         return $this->hasMany(Detail::class);
     }
 

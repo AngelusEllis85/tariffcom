@@ -7,6 +7,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
     <div class="container mx-auto">
       <h1 class="text-2xl font-bold mb-4">All Users</h1>
       <table class="w-full">
+        <!-- a 3 column table -->
         <thead>
           <tr>
             <th class="py-2">Name</th>
@@ -16,9 +17,12 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
         </thead>
         <tbody>
           <tr v-for="user in users" :key="user.id">
+            <!-- shows the users full name -->
             <td class="py-2">{{ user.prefixname }} {{ user.firstname }} {{ user.middlename }} {{ user.lastname }} {{ user.suffixname }}</td>
+            <!-- shows users email -->
             <td class="py-2">{{ user.email }}</td>
             <td class="py-2">
+              <!-- link to view the single user -->
                 <inertia-link :href="route('users.show', user.id)" class="text-indigo-600 hover:text-indigo-900">View</inertia-link>
             </td>
           </tr>

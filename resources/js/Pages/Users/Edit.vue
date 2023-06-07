@@ -46,6 +46,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
           <button type="submit" class="bg-blue-500  px-4 py-2 rounded">Update User</button>
         </div>
         <div v-if="errorMessage" class="text-red-500">
+          <!--this should dispaly the error message, works on create but not working here-->
       {{ errorMessage }}
     </div>
       </form>
@@ -59,6 +60,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
       user: Object
     },
     methods: {
+      //updateUser route
       updateUser() {
         this.$inertia.put(`/users/${this.user.id}`, this.user)
           .catch(error => {
