@@ -9,6 +9,8 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
+
 
 
 class UserController extends Controller
@@ -35,7 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validationRules = [
             'prefixname' => ['nullable', Rule::in(['Mr', 'Mrs', 'Ms'])],
             'firstname' => 'required',
             'middlename' => 'nullable',
@@ -43,13 +45,19 @@ class UserController extends Controller
             'suffixname' => 'nullable',
             'email' => 'required|email|unique:users',
             'password' => ['required', Password::defaults()],
-        ]);
+        ];
+
+        if ($request->hasFile('photo')) {
+            $validationRules['photo'] = 'image|mimes:jpeg,png,jpg,gif,svg|max:2048';
+        }
+
+        $validatedData = $request->validate($validationRules);
 
         $userData = [
             'firstname' => $validatedData['firstname'],
             'lastname' => $validatedData['lastname'],
             'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']), 
+            'password' => Hash::make($validatedData['password']),
         ];
         
         if (isset($validatedData['middlename'])) {
@@ -63,9 +71,17 @@ class UserController extends Controller
         if (isset($validatedData['suffixname'])) {
             $userData['suffixname'] = $validatedData['suffixname'];
         }
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $extension = $file->getClientOriginalExtension();
+            $filename = Str::random(5) . '-' . time() . '.' . $extension;
+            $path = $file->storeAs('public/uploads', $filename);
+            $userData['photo'] = '/storage/uploads/' . $filename;
+        }
         
         $user = User::create($userData);
-    
+        
         return response()->json(['user' => $user]);
     }
 

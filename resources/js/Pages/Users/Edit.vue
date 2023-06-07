@@ -30,6 +30,14 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
           <label for="email" class="block font-bold mb-2">Email:</label>
           <input type="email" id="email" v-model="user.email" class="border border-gray-300 p-2 w-full" required>
         </div>
+        <div class="mb-4" v-if="user.photo">
+          <label class="block font-bold mb-2">Photo:</label>
+          <img :src="user.photo" alt="User photo" class="mb-2" width="100" height="100">
+        </div>
+        <div class="mb-4">
+          <label for="photo" class="block font-bold mb-2">New Photo:</label>
+          <input type="file" id="photo" @change="handlePhotoUpload" class="border border-gray-300 p-2 w-full">
+        </div>
         <div class="mb-4">
           <label for="password" class="block font-bold mb-2">Password:</label>
           <input type="password" id="password" v-model="user.password" class="border border-gray-300 p-2 w-full" required>
@@ -37,6 +45,9 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
         <div class="mb-4">
           <button type="submit" class="bg-blue-500  px-4 py-2 rounded">Update User</button>
         </div>
+        <div v-if="errorMessage" class="text-red-500">
+      {{ errorMessage }}
+    </div>
       </form>
     </div>
     </AuthenticatedLayout>
@@ -51,7 +62,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
       updateUser() {
         this.$inertia.put(`/users/${this.user.id}`, this.user)
           .catch(error => {
-            console.error(error);
+            this.errorMessage = error.response.data.message || 'An error occurred';
           });
       },
     },

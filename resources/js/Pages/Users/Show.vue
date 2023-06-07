@@ -30,6 +30,10 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
                 <strong class="font-semibold">Email:</strong> 
                 <span class="ml-2">{{ user.email }}</span>
             </div>
+            <div class="mb-4" v-if="user.photo">
+                <label class="block font-bold mb-2">Photo:</label>
+                <img :src="user.photo" alt="User photo" class="mb-2" width="100" height="100">
+            </div>
         </div>
         <div class="mt-4">
             <inertia-link :href="`/users/${user.id}/edit`" class="px-4 py-2 rounded bg-blue-500 text-white">Edit User</inertia-link>
