@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use App\Events\UserSaved;
 
 
 
@@ -81,6 +82,7 @@ class UserController extends Controller
         }
         
         $user = User::create($userData);
+        event(new UserSaved($user));
         
         return response()->json(['user' => $user]);
     }
@@ -139,6 +141,7 @@ class UserController extends Controller
         }
         
         $user->update($userData);
+        event(new UserSaved($user));
 
         return redirect()->route('users.show', $user);
     }
